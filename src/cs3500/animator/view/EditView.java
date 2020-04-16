@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -41,6 +43,8 @@ public class EditView extends JFrame implements IEditView {
   protected JButton restartButton;
   protected JButton speedUpButton;
   protected JButton slowDownButton;
+
+  protected JSlider slider;
 
   protected JButton loadButton;
   protected JButton saveSVGButton;
@@ -71,6 +75,7 @@ public class EditView extends JFrame implements IEditView {
   protected JButton deleteShapeButton;
   protected JTextField shapeShapeName;
   protected JTextField shapeShapeType;
+
 
   /**
    * Constructor for the EditView. Set up the entire gui appearance by defining buttons, textboxes,
@@ -139,6 +144,8 @@ public class EditView extends JFrame implements IEditView {
     controlPanel.add(saveTextButton);
     saveLabel = new JLabel("Save a file⬆");
     controlPanel.add(saveLabel);
+    slider = new JSlider(JSlider.HORIZONTAL, 0, 25, 0);
+    controlPanel.add(slider);
     p.add(controlPanel);
 
     editPanel = new JPanel();
