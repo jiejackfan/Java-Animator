@@ -43,22 +43,28 @@ public class AnimatorPanel extends JPanel {
     for (IShape shape : listOfShape) {
       if (shape.getShape() == DifferentShapes.rectangle) {
         AffineTransform transform = g2.getTransform();
-//        AffineTransform toCenterAt = new AffineTransform();
-//        toCenterAt.concatenate(at);
-//        toCenterAt.translate();
-        transform.rotate(Math.toRadians(shape.getAngle()), shape.getPosition().getX() + shape.getWidth()/2,
-                shape.getPosition().getY() + shape.getHeight()/2);
+        transform.rotate(Math.toRadians(shape.getAngle()),
+                shape.getPosition().getX() + shape.getWidth() / 2,
+                shape.getPosition().getY() + shape.getHeight() / 2);
+        g2.transform(transform);
         g2.setColor(shape.getColor());
         g2.fillRect((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
                 (int) shape.getWidth(), (int) shape.getHeight());
+
       }
       else if (shape.getShape() == DifferentShapes.oval
               || shape.getShape() == DifferentShapes.ellipse) {
+        AffineTransform transform = g2.getTransform();
+        transform.rotate(Math.toRadians(shape.getAngle()),
+                shape.getPosition().getX() + shape.getWidth() / 2,
+                shape.getPosition().getY() + shape.getHeight() / 2);
+        g2.transform(transform);
         g2.rotate(Math.toRadians(shape.getAngle()));
         g2.setColor(shape.getColor());
         g2.fillOval((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
                 (int) shape.getWidth(), (int) shape.getHeight());
       }
+      g2.setTransform(new AffineTransform());
     }
   }
 
