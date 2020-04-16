@@ -6,6 +6,7 @@ import cs3500.animator.model.ReadOnlyModel;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -41,12 +42,16 @@ public class AnimatorPanel extends JPanel {
     //Draws the shapes in order from first to last so the last object will be on top.
     for (IShape shape : listOfShape) {
       if (shape.getShape() == DifferentShapes.rectangle) {
+        AffineTransform transform = g2.getTransform();
+        transform.rotate(Math.toRadians(shape.getAngle(), shape.getPosition().getX() + shape.getWidth()/2,
+                shape.getPosition().getY() + shape.getHeight()/2));
         g2.setColor(shape.getColor());
         g2.fillRect((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
                 (int) shape.getWidth(), (int) shape.getHeight());
       }
       else if (shape.getShape() == DifferentShapes.oval
               || shape.getShape() == DifferentShapes.ellipse) {
+        g2.rotate(Math.toRadians(shape.getAngle()));
         g2.setColor(shape.getColor());
         g2.fillOval((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
                 (int) shape.getWidth(), (int) shape.getHeight());
