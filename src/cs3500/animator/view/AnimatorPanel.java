@@ -43,8 +43,11 @@ public class AnimatorPanel extends JPanel {
     for (IShape shape : listOfShape) {
       if (shape.getShape() == DifferentShapes.rectangle) {
         AffineTransform transform = g2.getTransform();
-        transform.rotate(Math.toRadians(shape.getAngle(), shape.getPosition().getX() + shape.getWidth()/2,
-                shape.getPosition().getY() + shape.getHeight()/2));
+//        AffineTransform toCenterAt = new AffineTransform();
+//        toCenterAt.concatenate(at);
+//        toCenterAt.translate();
+        transform.rotate(Math.toRadians(shape.getAngle()), shape.getPosition().getX() + shape.getWidth()/2,
+                shape.getPosition().getY() + shape.getHeight()/2);
         g2.setColor(shape.getColor());
         g2.fillRect((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
                 (int) shape.getWidth(), (int) shape.getHeight());
