@@ -62,12 +62,10 @@ public class SVGView implements IView {
       List<IShape> initialShapes = readOnlyModel.getShapesBeginning();
       List<IShape> allShapes = readOnlyModel.getAllShapes();
       int counter = 0;
-      svgContent += String.format("<svg viewBox=\"%d %d %d %d\" version=\"1.1\" "
+      svgContent += String.format("<svg width=\"%d\" height=\"%d\" version=\"1.1\" "
                       + "xmlns=\"http://www.w3.org/2000/svg\">\n",
-              readOnlyModel.getCanvasX(),
-              readOnlyModel.getCanvasY(),
-              readOnlyModel.getCanvasWidth(),
-              readOnlyModel.getCanvasHeight());
+              readOnlyModel.getCanvasWidth() * 2,
+              readOnlyModel.getCanvasHeight() * 2);
       // Add the animation shape by insertion order
       for (IShape s : allShapes) {
         if (!readOnlyModel.getAllMotionsOfShape(s).isEmpty()) {
