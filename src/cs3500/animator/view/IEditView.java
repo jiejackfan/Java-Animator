@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.event.ChangeListener;
 
 /**
  * IEditView is an interface that will extend all methods from IView and implement a view unique
@@ -93,4 +94,15 @@ public interface IEditView extends IView {
    */
   void loadNewAnimatorPanel(ReadOnlyModel m, int width, int height);
 
+  /**
+   * Adds the change listener for the slider.
+   * @param cl the controller as a change listener.
+   */
+  void addChangeListener(ChangeListener cl);
+
+  /**
+   * Updates the current slider position;
+   * @param currentTick current tick to set the slider positon at.
+   */
+  void updateSliderPosition(int currentTick);
 }

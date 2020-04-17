@@ -21,7 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import javax.swing.JSlider;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**
@@ -29,7 +32,7 @@ import javax.swing.Timer;
  * will take control of the timing (ticks per second) of our animation. It will tell the model the
  * current tick and tell view to update when a new tick happens.
  */
-public class AnimationController implements IController, ActionListener {
+public class AnimationController implements IController, ActionListener, ChangeListener {
 
   private IView v;
   protected IModel m;
@@ -53,12 +56,15 @@ public class AnimationController implements IController, ActionListener {
       if (m.getCurrentTick() < m.returnMaxTick()) {
         currentTick = currentTick + 1;
         m.setTick(currentTick);
-
-
+        if (v instanceof EditView) {
+          ((EditView) v).updateSliderPosition(currentTick);
+        }
       } else if (m.getCurrentTick() == m.returnMaxTick()) {
-        if (((EditView) v).getCheckState()) {
-          currentTick = 0;
-          m.setTick(currentTick);
+        if (v instanceof EditView) {
+          if (((EditView) v).getCheckState()) {
+            currentTick = 0;
+            m.setTick(currentTick);
+          }
         }
       }
       v.refresh();
@@ -77,6 +83,7 @@ public class AnimationController implements IController, ActionListener {
     this.m = m;
     if (v instanceof EditView) {
       ((EditView) v).addActionListener(this);
+      ((EditView) v).addChangeListener(this);
     }
   }
 
@@ -124,8 +131,9 @@ public class AnimationController implements IController, ActionListener {
 
         // Resetarts the timer.
         case "Restart Button":
-          if (currentTick >= m.getMaxTick()) {
+          if (currentTick >= m.returnMaxTick()) {
             currentTick = 0;
+            m.setTick(currentTick);
             timer.restart();
           } else {
             currentTick = 0;
@@ -283,4 +291,12 @@ public class AnimationController implements IController, ActionListener {
     return this.currentTick;
   }
 
+  @Override
+  public void stateChanged(ChangeEvent e) {
+    JSlider src = (JSlider) e.getSource();
+    currentTick = src.getValue();
+    m.setTick(currentTick);
+    ((EditView) v).updateSliderPosition(currentTick);
+
+  }
 }

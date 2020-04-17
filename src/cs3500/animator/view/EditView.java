@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import cs3500.animator.controller.AnimationController;
 import cs3500.animator.model.ReadOnlyModel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,8 +18,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -41,6 +46,8 @@ public class EditView extends JFrame implements IEditView {
   protected JButton restartButton;
   protected JButton speedUpButton;
   protected JButton slowDownButton;
+
+  protected JSlider slider;
 
   protected JButton loadButton;
   protected JButton saveSVGButton;
@@ -71,6 +78,7 @@ public class EditView extends JFrame implements IEditView {
   protected JButton deleteShapeButton;
   protected JTextField shapeShapeName;
   protected JTextField shapeShapeType;
+
 
   /**
    * Constructor for the EditView. Set up the entire gui appearance by defining buttons, textboxes,
@@ -139,6 +147,14 @@ public class EditView extends JFrame implements IEditView {
     controlPanel.add(saveTextButton);
     saveLabel = new JLabel("Save a file⬆");
     controlPanel.add(saveLabel);
+    slider = new JSlider(JSlider.HORIZONTAL, 0, m.returnMaxTick(), 0);
+    slider.setMajorTickSpacing(50);
+    slider.setMinorTickSpacing(10);
+    slider.setPaintTicks(true);
+    slider.setPaintLabels(true);
+    slider.setBorder(
+        BorderFactory.createEmptyBorder(0,0,10,0));
+    controlPanel.add(slider);
     p.add(controlPanel);
 
     editPanel = new JPanel();
@@ -360,5 +376,13 @@ public class EditView extends JFrame implements IEditView {
     p.repaint();
   }
 
+  @Override
+  public void addChangeListener(ChangeListener cl) {
+    slider.addChangeListener(cl);
+  }
 
+  @Override
+  public void updateSliderPosition(int currentTick) {
+    slider.setValue(currentTick);
+  }
 }
