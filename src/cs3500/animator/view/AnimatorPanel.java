@@ -46,7 +46,9 @@ public class AnimatorPanel extends JPanel {
         transform.rotate(Math.toRadians(shape.getAngle()),
                 shape.getPosition().getX() + shape.getWidth() / 2,
                 shape.getPosition().getY() + shape.getHeight() / 2);
-        g2.transform(transform);
+        g2.scale(1.5,1.5);
+
+        g2.setTransform(transform);
         g2.setColor(shape.getColor());
         g2.fillRect((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
                 (int) shape.getWidth(), (int) shape.getHeight());
@@ -58,7 +60,7 @@ public class AnimatorPanel extends JPanel {
         transform.rotate(Math.toRadians(shape.getAngle()),
                 shape.getPosition().getX() + shape.getWidth() / 2,
                 shape.getPosition().getY() + shape.getHeight() / 2);
-        g2.transform(transform);
+        g2.setTransform(transform);
         g2.rotate(Math.toRadians(shape.getAngle()));
         g2.setColor(shape.getColor());
         g2.fillOval((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
