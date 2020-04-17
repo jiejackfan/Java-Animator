@@ -1,0 +1,16 @@
+<svg width="820" height="440" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<rect id="disk1" x="100.000" y="100.000" width="20.000" height="30.000" fill="rgb(0,49,90)" visibility="hidden">
+		<set attributeName="visibility" attributeType="CS" to="visible" begin="50.000ms" dur="0.000ms" fill="freeze" />		<animate attributeType="xml" begin="50.000ms" dur="1200.000ms" attributeName="fill" from="rgb(0,49,90)" to="rgb(0,100,100)" fill="freeze"/>
+		<animateTransform attributeName="transform" attributeType="xml" type="rotate" from="0.000 110.000 115.000" to="100.000 110.000 115.000" dur="1200.000ms" repeatCount="1" fill="freeze"/>
+	</rect>
+	<rect id="disk2" x="150.000" y="210.000" width="65.000" height="30.000" fill="rgb(6,247,41)" visibility="hidden">
+		<set attributeName="visibility" attributeType="CS" to="visible" begin="50.000ms" dur="0.000ms" fill="freeze" />		<animate attributeType="xml" begin="50.000ms" dur="2800.000ms" attributeName="width" from="65.000" to="30.000" fill="freeze"/>
+		<animate attributeType="xml" begin="50.000ms" dur="2800.000ms" attributeName="height" from="30.000" to="165.000" fill="freeze"/>
+		<animateTransform attributeName="transform" attributeType="xml" type="rotate" from="0.000 182.500 225.000" to="90.000 165.000 292.500" dur="2800.000ms" repeatCount="1" fill="freeze"/>
+	</rect>
+	<rect id="disk3" x="300.000" y="85.000" width="110.000" height="30.000" fill="rgb(11,45,175)" visibility="hidden">
+		<set attributeName="visibility" attributeType="CS" to="visible" begin="50.000ms" dur="0.000ms" fill="freeze" />		<animate attributeType="xml" begin="50.000ms" dur="1000.000ms" attributeName="x" from="300.000" to="150.000" fill="freeze"/>
+		<animate attributeType="xml" begin="50.000ms" dur="1000.000ms" attributeName="y" from="85.000" to="65.000" fill="freeze"/>
+		<animateTransform attributeName="transform" attributeType="xml" type="rotate" from="0.000 355.000 80.000" to="270.000 205.000 80.000" dur="1000.000ms" repeatCount="1" fill="freeze"/>
+	</rect>
+</svg>

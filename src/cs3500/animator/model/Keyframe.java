@@ -21,6 +21,8 @@ public class Keyframe {
   // color. Using the awt color library.
   private Color color;
 
+  private double angle;
+
   /**
    * Public constructor for keyframe. This is used when model wants to enter a new keyframe into a
    * shape's list of keyframes.
@@ -34,7 +36,7 @@ public class Keyframe {
    * @throws IllegalArgumentException if any width or height are negative
    */
   public Keyframe(int time, Position2D position, double width, double height,
-                  Color color) {
+                  Color color, double angle) {
     // Check whether the given times are valid.
     if (time < 0) {
       throw new IllegalArgumentException("Invalid time.");
@@ -48,6 +50,7 @@ public class Keyframe {
     this.width = width;
     this.height = height;
     this.color = color;
+    this.angle = angle;
   }
 
   /**
@@ -62,6 +65,7 @@ public class Keyframe {
     this.width = kf.width;
     this.height = kf.height;
     this.color = kf.color;
+    this.angle = kf.angle;
   }
 
   @Override
@@ -73,7 +77,8 @@ public class Keyframe {
             Double.toString(width), Double.toString(height),
             Integer.toString(color.getRed()),
             Integer.toString(color.getGreen()),
-            Integer.toString(color.getBlue()));
+            Integer.toString(color.getBlue()),
+            Double.toString(angle));
     return output;
   }
 
@@ -124,6 +129,9 @@ public class Keyframe {
     return color;
   }
 
+  public double getAngle() {
+    return angle;
+  }
 
   /**
    * Function to change time.

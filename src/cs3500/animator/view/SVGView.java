@@ -62,12 +62,10 @@ public class SVGView implements IView {
       List<IShape> initialShapes = readOnlyModel.getShapesBeginning();
       List<IShape> allShapes = readOnlyModel.getAllShapes();
       int counter = 0;
-      svgContent += String.format("<svg viewBox=\"%d %d %d %d\" version=\"1.1\" "
+      svgContent += String.format("<svg width=\"%d\" height=\"%d\" version=\"1.1\" "
                       + "xmlns=\"http://www.w3.org/2000/svg\">\n",
-              readOnlyModel.getCanvasX(),
-              readOnlyModel.getCanvasY(),
-              readOnlyModel.getCanvasWidth(),
-              readOnlyModel.getCanvasHeight());
+              readOnlyModel.getCanvasWidth() * 2,
+              readOnlyModel.getCanvasHeight() * 2);
       // Add the animation shape by insertion order
       for (IShape s : allShapes) {
         if (!readOnlyModel.getAllMotionsOfShape(s).isEmpty()) {
@@ -173,6 +171,17 @@ public class SVGView implements IView {
                 startTime, duration, m.getStartColor().getRed(), m.getStartColor().getGreen(),
                 m.getStartColor().getBlue(), m.getEndColor().getRed(), m.getEndColor().getGreen(),
                 m.getEndColor().getBlue());
+      }
+      // For rotation
+      if (m.getStartAngle() != m.getEndAngle()) {
+        svgContent += String.format("\t\t<animateTransform attributeName=\"transform\" "
+                        + "attributeType=\"xml\" type=\"rotate\" "
+                        + "from=\"%.3f %.3f %.3f\" to=\"%.3f %.3f %.3f\" dur=\"%.3fms\" "
+                        + "repeatCount=\"1\" fill=\"freeze\"/>\n",
+                m.getStartAngle(), m.getStartPosition().getX() + m.getStartWidth() / 2,
+                m.getEndPosition().getY() + m.getStartHeight() / 2,
+                m.getEndAngle(), m.getEndPosition().getX() + m.getEndWidth() / 2,
+                m.getEndPosition().getY() + m.getEndHeight() / 2, duration);
       }
     }
     return svgContent;

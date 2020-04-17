@@ -61,10 +61,10 @@ public interface IModel extends ReadOnlyModel {
    *                                  negative
    */
   void addMotion(String name, int startTime, int startX, int startY, double startWidth,
-                 double startHeight, int startColorR, int startColorG, int startColorB,
+                 double startHeight, int startColorR, int startColorG, int startColorB, double startAngle,
                  int endTime, int endX, double endY, double endWidth,
                  double endHeight, int endColorR,
-                 int endColorG, int endColorB);
+                 int endColorG, int endColorB, double endAngle);
 
   /**
    * Remove a motion from a list of motion for a given shape.
@@ -101,7 +101,7 @@ public interface IModel extends ReadOnlyModel {
    *                                  negative
    */
   void addKeyframe(String name, int time, int x, int y, double width,
-                   double height, int colorR, int colorG, int colorB);
+                   double height, int colorR, int colorG, int colorB, double angle);
 
   /**
    * Remove a keyframe from a list of keyframes for a given shape by the given index.

@@ -81,9 +81,10 @@ public class AnimationModel implements IModel {
   @Override
   public void addMotion(String name, int startTime, int startX, int startY, double startWidth,
                         double startHeight, int startColorR, int startColorG, int startColorB,
+                        double startAngle,
                         int endTime, int endX, double endY, double endWidth,
                         double endHeight, int endColorR, int endColorG,
-                        int endColorB) {
+                        int endColorB, double endAngle) {
     // Check whether the given parameters of color are valid, if they are valid, pass into the color
     // constructor, if not, throw an illegal argument exception.
     if (name == null || name.equals("") || !nameMap.containsKey(name)) {
@@ -98,16 +99,16 @@ public class AnimationModel implements IModel {
     // checked in the position2D in the constructor of class position2D.
     animation.get(nameMap.get(name)).add(
             new Motion(startTime, new Position2D(startX, startY), startWidth, startHeight,
-                    new Color(startColorR, startColorG, startColorB), endTime,
+                    new Color(startColorR, startColorG, startColorB), startAngle, endTime,
                     new Position2D(endX, endY), endWidth, endHeight,
-                    new Color(endColorR, endColorG, endColorB)));
+                    new Color(endColorR, endColorG, endColorB), endAngle));
     frames.get(nameMap.get(name)).add(new Keyframe(endTime, new Position2D(endX, endY), endWidth,
-            endHeight, new Color(endColorR, endColorG, endColorB)));
+            endHeight, new Color(endColorR, endColorG, endColorB), endAngle));
   }
 
   @Override
   public void addKeyframe(String name, int time, int x, int y, double width, double height,
-                          int colorR, int colorG, int colorB) {
+                          int colorR, int colorG, int colorB, double angle) {
     // Check whether the given parameters of color are valid, if they are valid, pass into the color
     // constructor, if not, throw an illegal argument exception.
     if (name == null || name.equals("") || !nameMap.containsKey(name)) {
@@ -124,7 +125,7 @@ public class AnimationModel implements IModel {
     // Other parameters are check when constructing the motion, and the parameters of position are
     // checked in the position2D in the constructor of class position2D.
     frames.get(nameMap.get(name)).add(new Keyframe(time, new Position2D(x, y), width, height,
-            new Color(colorR, colorG, colorB)));
+            new Color(colorR, colorG, colorB), angle));
   }
 
   @Override
@@ -171,10 +172,10 @@ public class AnimationModel implements IModel {
     // If the shape does not have any Keyframes. Add a default frame with all parameters set to 0.
     if (frames.get(shape).isEmpty()) {
       frames.get(shape).add(new Keyframe(time, new Position2D(0, 0), 0, 0,
-              new Color(0, 0, 0)));
+              new Color(0, 0, 0), 0.0));
       addMotion(name, time, 0, 0, 0, 0, 0,
-              0, 0, time, 0, 0, 0, 0,
-              0, 0, 0);
+              0, 0, 0.0,time, 0, 0, 0, 0,
+              0, 0, 0, 0.0);
       return;
     }
 
@@ -223,7 +224,7 @@ public class AnimationModel implements IModel {
       if (time > time1 && time < time2) {
         IShape newShape = buildShapeFromFrame(shape, fs, time, name);
         Keyframe tmpKeyframe = new Keyframe(time, newShape.getPosition(),
-                newShape.getWidth(), newShape.getHeight(), newShape.getColor());
+                newShape.getWidth(), newShape.getHeight(), newShape.getColor(), newShape.getAngle());
         fs.add(i + 1, tmpKeyframe);
         // Make according insertion to motions of the given shape
         Motion tmpMotion = findActualMotion(animation.get(nameMap.get(name)), time);
@@ -471,12 +472,12 @@ public class AnimationModel implements IModel {
     //if the time has passed the ending time
     if (time > tmpMotion.getEndTime() && time <= maxTick) {
       return new Shape(tmpMotion.getEndColor(), tmpMotion.getEndPosition(), tmpMotion.getEndWidth(),
-              tmpMotion.getEndHeight(), name, DifferentShapes.valueOf(shape.toLowerCase()));
+              tmpMotion.getEndHeight(), tmpMotion.getEndAngle(), name, DifferentShapes.valueOf(shape.toLowerCase()));
     }
     //if starttime the time given
     else if (time == tmpMotion.getStartTime()) {
       return new Shape(tmpMotion.getStartColor(), tmpMotion.getStartPosition(),
-              tmpMotion.getStartWidth(), tmpMotion.getStartHeight(), name,
+              tmpMotion.getStartWidth(), tmpMotion.getStartHeight(), tmpMotion.getStartAngle(), name,
               DifferentShapes.valueOf(shape.toLowerCase()));
     }
     //else if the time has not passed ending time
@@ -501,8 +502,10 @@ public class AnimationModel implements IModel {
               + tmpMotion.getStartWidth();
       double height = ratio * (tmpMotion.getEndHeight() - tmpMotion.getStartHeight())
               + tmpMotion.getStartHeight();
+      double angle = ratio * (tmpMotion.getEndAngle() - tmpMotion.getStartAngle())
+              + tmpMotion.getStartAngle();
 
-      return new Shape(color, position, width, height, name,
+      return new Shape(color, position, width, height, angle, name,
               DifferentShapes.valueOf(shape.toLowerCase()));
     }
   }
@@ -578,12 +581,12 @@ public class AnimationModel implements IModel {
     Keyframe endFrame = tmpFrame.get(1);
     if (time > endFrame.getTime() && time <= maxTick) {
       return new Shape(endFrame.getColor(), endFrame.getPosition(), endFrame.getWidth(),
-              endFrame.getHeight(), name, DifferentShapes.valueOf(shape.toLowerCase()));
+              endFrame.getHeight(), endFrame.getAngle(), name, DifferentShapes.valueOf(shape.toLowerCase()));
     }
     //if starttime the time given
     else if (time == startFrame.getTime()) {
       return new Shape(startFrame.getColor(), startFrame.getPosition(),
-              startFrame.getWidth(), startFrame.getHeight(), name,
+              startFrame.getWidth(), startFrame.getHeight(), startFrame.getAngle(), name,
               DifferentShapes.valueOf(shape.toLowerCase()));
     }
     //else if the time has not passed ending time
@@ -608,8 +611,10 @@ public class AnimationModel implements IModel {
               + startFrame.getWidth();
       double height = ratio * (endFrame.getHeight() - startFrame.getHeight())
               + startFrame.getHeight();
+      double angle = ratio * (endFrame.getAngle() - startFrame.getAngle())
+              + startFrame.getAngle();
 
-      return new Shape(color, position, width, height, name,
+      return new Shape(color, position, width, height, angle, name,
               DifferentShapes.valueOf(shape.toLowerCase()));
     }
   }
@@ -794,16 +799,16 @@ public class AnimationModel implements IModel {
 
     @Override
     public AnimationBuilder<IModel> addMotion(String name, int t1, int x1, int y1, int w1, int h1,
-                                              int r1, int g1, int b1, int t2, int x2, int y2,
-                                              int w2, int h2, int r2, int g2, int b2) {
-      m.addMotion(name, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2, g2, b2);
+                                              int r1, int g1, int b1, int a1, int t2, int x2, int y2,
+                                              int w2, int h2, int r2, int g2, int b2, int a2) {
+      m.addMotion(name, t1, x1, y1, w1, h1, r1, g1, b1, a1, t2, x2, y2, w2, h2, r2, g2, b2, a2);
       return this;
     }
 
     @Override
     public AnimationBuilder<IModel> addKeyframe(String name, int t, int x, int y, int w, int h,
-                                                int r, int g, int b) {
-      m.addKeyframe(name, t, x, y, w, h, r, g, b);
+                                                int r, int g, int b, int a) {
+      // m.addKeyframe(name, t, x, y, w, h, r, g, b, a);
       return this;
     }
   }

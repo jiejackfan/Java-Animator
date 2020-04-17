@@ -16,6 +16,7 @@ public class Shape implements IShape {
   protected Position2D position;
   protected double width;
   protected double height;
+  protected double angle;
   protected DifferentShapes shape;
   protected String name;
 
@@ -32,6 +33,7 @@ public class Shape implements IShape {
     this.position = new Position2D(0, 0);
     this.width = 1;
     this.height = 1;
+    this.angle = 0.0;
     this.shape = shape;
     this.name = name;
   }
@@ -47,7 +49,7 @@ public class Shape implements IShape {
    * @param name     name of the shape that should be initialized.
    * @param shape    shape of the shape that should be initialized.
    */
-  public Shape(Color color, Position2D position, double width, double height, String name,
+  public Shape(Color color, Position2D position, double width, double height, double angle, String name,
                DifferentShapes shape) {
     if (width <= 0 || height <= 0) {
       throw new IllegalArgumentException("The width and height must be positive");
@@ -56,6 +58,7 @@ public class Shape implements IShape {
     this.position = position;
     this.width = width;
     this.height = height;
+    this.angle = angle;
     this.name = name;
     this.shape = shape;
   }
@@ -70,6 +73,7 @@ public class Shape implements IShape {
     this.position = shape.position;
     this.width = shape.width;
     this.height = shape.height;
+    this.angle = shape.angle;
     this.shape = shape.shape;
     this.name = shape.name;
   }
@@ -86,7 +90,7 @@ public class Shape implements IShape {
 
   @Override
   public int hashCode() {
-    return Objects.hash(color, position, width, height, shape, name);
+    return Objects.hash(color, position, width, height, angle, shape, name);
   }
 
   @Override
@@ -101,6 +105,7 @@ public class Shape implements IShape {
               && (this.position.equals(((Shape) that).position))
               && (Math.abs(this.width - ((Shape) (that)).width) < 0.1)
               && (Math.abs(this.height - ((Shape) (that)).height) < 0.1)
+              && (Math.abs(this.angle - ((Shape) (that)).angle) < 0.1)
               && (this.shape == ((Shape) (that)).shape)
               && (this.name.equals(((Shape) (that)).name));
     }
@@ -129,6 +134,11 @@ public class Shape implements IShape {
   @Override
   public DifferentShapes getShape() {
     return this.shape;
+  }
+
+  @Override
+  public double getAngle() {
+    return this.angle;
   }
 
 
