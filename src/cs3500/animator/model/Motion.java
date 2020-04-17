@@ -111,7 +111,7 @@ public class Motion {
             Integer.toString(startColor.getRed()),
             Integer.toString(startColor.getGreen()),
             Integer.toString(startColor.getBlue()),
-            Double.toString(startAngle),
+            Integer.toString((int)startAngle),
             Integer.toString(endTime),
             Integer.toString((int)endPosition.getX()),
             Integer.toString((int)endPosition.getY()),
@@ -119,7 +119,7 @@ public class Motion {
             Integer.toString(endColor.getRed()),
             Integer.toString(endColor.getGreen()),
             Integer.toString(endColor.getBlue()),
-            Double.toString(endAngle));
+            Integer.toString((int)endAngle));
     return output;
   }
 

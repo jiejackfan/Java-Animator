@@ -38,7 +38,7 @@ public class AnimationReader {
     // Split at whitespace, and ignore # comment lines
     s.useDelimiter(Pattern.compile("(\\p{Space}+|#.*)+"));
     while (s.hasNext()) {
-      String word = s.next();
+      String word = s.next().toLowerCase();
       switch (word) {
         case "canvas":
           readCanvas(s, builder);
