@@ -3,8 +3,10 @@ package cs3500.animator.model;
 import cs3500.animator.util.AnimationBuilder;
 
 import java.awt.Color;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,6 +26,9 @@ public class AnimationModel implements IModel {
    * corresponding shapes as value.
    */
   private final Map<String, IShape> nameMap;
+
+
+  private final Map<Integer, List<IShape>> layerInformation;
 
   /**
    * This final hash map structure will store the entire animation. key: a shape. value: that key
@@ -47,15 +52,19 @@ public class AnimationModel implements IModel {
     this.nameMap = new LinkedHashMap<>();
     this.animation = new LinkedHashMap<>();
     this.frames = new LinkedHashMap<>();
+    this.layerInformation = new HashMap<>();
   }
 
   @Override
-  public void createShape(String shape, String name) {
+  public void createShape(String shape, String name, int layer) {
     if (name == null || name.equals("")) {
       throw new IllegalArgumentException("The name cannot be null or empty.");
     }
     if (shape == null || shape.equals("")) {
       throw new IllegalArgumentException("Invalid shape input.");
+    }
+    if (layer < 0) {
+      throw new IllegalArgumentException("Invalid layer information");
     }
     if (nameMap.containsKey(name)
             && nameMap.containsValue(new Shape(name,
@@ -65,6 +74,10 @@ public class AnimationModel implements IModel {
     nameMap.put(name, new Shape(name, DifferentShapes.valueOf(shape.toLowerCase())));
     animation.put(nameMap.get(name), new ArrayList<>());
     frames.put(nameMap.get(name), new ArrayList<>());
+
+    layerInformation.computeIfAbsent(layer, k -> new ArrayList<IShape>());
+
+    layerInformation.get(layer).add(nameMap.get(name));
   }
 
   @Override
@@ -513,8 +526,31 @@ public class AnimationModel implements IModel {
   @Override
   public List<IShape> getFrame(int time) {
     List<IShape> shapesAtTime = new ArrayList<>();
+
+    // for every layer
+    //  for every shape
+    //    frames -> find each shape
+    //    shapesAtTime
+
+    for (Map.Entry<Integer, List<IShape>> entry: layerInformation.entrySet()) {
+      if (entry.getValue() == null || entry.getValue().isEmpty()) {
+        continue;
+      }
+      for (IShape s: entry.getValue()) {
+        List<Keyframe> tmpListOfKeyframe = frames.get(s);
+        List<Keyframe> tmpFrame;
+        if (isTimeInFrames(tmpListOfKeyframe, time)) {
+          tmpFrame = findFrame(tmpListOfKeyframe, time);
+          shapesAtTime.add(buildShapeFromFrame(s.getShapeName(),
+              tmpFrame, time, s.getName()));
+        }
+      }
+
+    }
+
     //go through all shapes in map, add to shapeAtTime if we find a shape that have motion at the
     //  exact time
+    /*
     for (Map.Entry<IShape, List<Keyframe>> mapPair : frames.entrySet()) {
       IShape tmpShape = mapPair.getKey();
       List<Keyframe> tmpFrame;
@@ -524,6 +560,8 @@ public class AnimationModel implements IModel {
                 tmpFrame, time, tmpShape.getName()));
       }
     }
+
+     */
     return shapesAtTime;
   }
 
@@ -792,8 +830,8 @@ public class AnimationModel implements IModel {
     }
 
     @Override
-    public AnimationBuilder<IModel> declareShape(String name, String type) {
-      m.createShape(type, name);
+    public AnimationBuilder<IModel> declareShape(String name, String type, int layer) {
+      m.createShape(type, name, layer);
       return this;
     }
 

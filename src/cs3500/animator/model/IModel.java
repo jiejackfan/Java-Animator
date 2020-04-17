@@ -13,12 +13,13 @@ public interface IModel extends ReadOnlyModel {
    * represent the entire animation.
    *
    * @param shape This is a string that represents the shape user wants to create. This can be one
-   *              of "rectangle", "oval"
-   * @param name  This is a custom name the user can assign to this shape
+   *              of "rectangle", "oval".
+   * @param name  This is a custom name the user can assign to this shape.
+   * @param layer this is the layer information of a shape.
    * @throws IllegalArgumentException under 3 situations: 1.shape is null or "" 2.name is null or
-   *                                  "". 3.shape user wants to create does not exist
+   *                                  "". 3.shape user wants to create does not exist.
    */
-  void createShape(String shape, String name);
+  void createShape(String shape, String name, int layer);
 
   /**
    * Removes a shape and its corresponding list of motions and keyframes from the animation.

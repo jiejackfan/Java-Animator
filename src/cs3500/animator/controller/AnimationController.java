@@ -258,7 +258,7 @@ public class AnimationController implements IController, ActionListener, ChangeL
         case "Create Shape":
           List<String> tmp = v.getShapePanelInput();
           try {
-            m.createShape(tmp.get(0), tmp.get(1));
+            m.createShape(tmp.get(0), tmp.get(1),0);
           } catch (IllegalArgumentException iae) {
             v.showErrorMsg(iae.getMessage());
           }

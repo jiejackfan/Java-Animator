@@ -68,6 +68,7 @@ public class AnimationReader {
   private static <Doc> void readShape(Scanner s, AnimationBuilder<Doc> builder) {
     String name;
     String type;
+    String layer;
     if (s.hasNext()) {
       name = s.next();
     } else {
@@ -79,7 +80,16 @@ public class AnimationReader {
     else {
       throw new IllegalStateException("Shape: Expected a type, but no more input available");
     }
-    builder.declareShape(name, type);
+    String[] fieldNames = {"layer"};
+    int vals;
+    if (s.hasNextInt()) {
+      vals = getInt(s, "Shape", "layer");
+      builder.declareShape(name, type, vals);
+    }
+    else {
+      vals = 0;
+      builder.declareShape(name, type, vals);
+    }
   }
 
   private static <Doc> void readMotion(Scanner s, AnimationBuilder<Doc> builder) {

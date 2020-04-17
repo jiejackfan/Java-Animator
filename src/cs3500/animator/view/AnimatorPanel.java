@@ -41,14 +41,13 @@ public class AnimatorPanel extends JPanel {
     //Go through each shape in the List of shape and draw the corresponding shape.
     //Draws the shapes in order from first to last so the last object will be on top.
     for (IShape shape : listOfShape) {
+      AffineTransform oldTransform = g2.getTransform();
       if (shape.getShape() == DifferentShapes.rectangle) {
-        AffineTransform transform = g2.getTransform();
+        AffineTransform transform = new AffineTransform();
         transform.rotate(Math.toRadians(shape.getAngle()),
                 shape.getPosition().getX() + shape.getWidth() / 2,
                 shape.getPosition().getY() + shape.getHeight() / 2);
-        g2.scale(1.5,1.5);
-
-        g2.setTransform(transform);
+        g2.transform(transform);
         g2.setColor(shape.getColor());
         g2.fillRect((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
                 (int) shape.getWidth(), (int) shape.getHeight());
@@ -56,17 +55,17 @@ public class AnimatorPanel extends JPanel {
       }
       else if (shape.getShape() == DifferentShapes.oval
               || shape.getShape() == DifferentShapes.ellipse) {
-        AffineTransform transform = g2.getTransform();
+        AffineTransform transform = new AffineTransform();
         transform.rotate(Math.toRadians(shape.getAngle()),
                 shape.getPosition().getX() + shape.getWidth() / 2,
                 shape.getPosition().getY() + shape.getHeight() / 2);
-        g2.setTransform(transform);
+        g2.transform(transform);
         g2.rotate(Math.toRadians(shape.getAngle()));
         g2.setColor(shape.getColor());
         g2.fillOval((int) shape.getPosition().getX(), (int) shape.getPosition().getY(),
                 (int) shape.getWidth(), (int) shape.getHeight());
       }
-      g2.setTransform(new AffineTransform());
+      g2.setTransform(oldTransform);
     }
   }
 

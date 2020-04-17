@@ -49,8 +49,8 @@ public class Shape implements IShape {
    * @param name     name of the shape that should be initialized.
    * @param shape    shape of the shape that should be initialized.
    */
-  public Shape(Color color, Position2D position, double width, double height, double angle, String name,
-               DifferentShapes shape) {
+  public Shape(Color color, Position2D position, double width, double height, double angle,
+                String name, DifferentShapes shape) {
     if (width <= 0 || height <= 0) {
       throw new IllegalArgumentException("The width and height must be positive");
     }
