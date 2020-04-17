@@ -174,6 +174,17 @@ public class SVGView implements IView {
                 m.getStartColor().getBlue(), m.getEndColor().getRed(), m.getEndColor().getGreen(),
                 m.getEndColor().getBlue());
       }
+      // For rotation
+      if (m.getStartAngle() != m.getEndAngle()) {
+        svgContent += String.format("\t\t<animateTransform attributeName=\"transform\" "
+                        + "attributeType=\"xml\" type=\"rotate\" "
+                        + "from=\"%.3f %.3f %.3f\" to=\"%.3f %.3f %.3f\" dur=\"%.3fms\" "
+                        + "repeatCount=\"1\" fill=\"freeze\"/>\n",
+                m.getStartAngle(), m.getStartPosition().getX() + m.getStartWidth() / 2,
+                m.getEndPosition().getY() + m.getStartHeight() / 2,
+                m.getEndAngle(), m.getEndPosition().getX() + m.getEndWidth() / 2,
+                m.getEndPosition().getY() + m.getEndHeight() / 2, duration);
+      }
     }
     return svgContent;
   }
