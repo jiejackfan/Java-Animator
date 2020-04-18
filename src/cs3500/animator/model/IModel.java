@@ -176,4 +176,29 @@ public interface IModel extends ReadOnlyModel {
    */
   void setCanvas(int x, int y, int w, int h);
 
+  /**
+   * Add a new layer to the layerInformation hashmap.
+   * @param layer integer representation of the layer.
+   */
+  void addNewLayer(int layer);
+
+  /**
+   * Delete a layer in the layerInformation hashmap.
+   * @param layer integer representation of the layer.
+   */
+  void deleteLayer(int layer);
+
+  /**
+   * Switch the list of Shapes belonging to the two layers.
+   * @param layer1 integer representation of the layer1.
+   * @param layer2 integer representation of the layer2.
+   */
+  void reorderLayer(int layer1, int layer2);
+
+  /**
+   * Switch a shape from its own layer to a new specified layer.
+   * @param shapeName shapeName of the shape user wants to store.
+   * @param layer integer representation of the layer.
+   */
+  void addShapeToLayer(String shapeName, int layer);
 }

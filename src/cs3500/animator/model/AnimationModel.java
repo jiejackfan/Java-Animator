@@ -358,7 +358,17 @@ public class AnimationModel implements IModel {
     }
     for (Map.Entry<String, IShape> mapPair : nameMap.entrySet()) {
       String name = mapPair.getKey();
-      output = output + "Shape " + name + " " + nameMap.get(name).getShapeName() + "\n";
+
+      int layerOfShape = 0;
+      for (Map.Entry<Integer, List<IShape>> layerPair: layerInformation.entrySet()) {
+        if (layerPair.getValue().contains(nameMap.get(name))) {
+          layerOfShape = layerPair.getKey();
+        }
+      }
+
+      output = output + "Shape " + name + " " + nameMap.get(name).getShapeName() + " "
+          + layerOfShape + "\n";
+
       output = output + listOfMotionsToString(name, animation.get(nameMap.get(name)));
     }
     return output;
@@ -545,7 +555,6 @@ public class AnimationModel implements IModel {
               tmpFrame, time, s.getName()));
         }
       }
-
     }
 
     //go through all shapes in map, add to shapeAtTime if we find a shape that have motion at the
@@ -744,6 +753,67 @@ public class AnimationModel implements IModel {
     this.canvasY = y;
     this.canvasWidth = w;
     this.canvasHeight = h;
+  }
+
+  @Override
+  public void addNewLayer(int layer) {
+    if (layerInformation.containsKey(layer)) {
+      throw new IllegalArgumentException("Layer already exists");
+    }
+    else {
+      layerInformation.put(layer, new ArrayList<IShape>());
+    }
+  }
+  @Override
+  public void deleteLayer(int layer) {
+    if (!layerInformation.containsKey(layer)) {
+      throw new IllegalArgumentException("Layer does not exist");
+    }
+    for(IShape s: layerInformation.get(layer)) {
+      removeShape(s.getName());
+    }
+    layerInformation.remove(layer);
+
+  }
+
+  @Override
+  public void reorderLayer(int layer1, int layer2) {
+    if (!layerInformation.containsKey(layer1)) {
+      throw new IllegalArgumentException("Layer 1 given does not exist");
+    }
+
+    if (!layerInformation.containsKey(layer2)) {
+      throw new IllegalArgumentException("Layer 2 given does not exist");
+    }
+
+    List<IShape> listOfShape1 = layerInformation.get(layer1);
+    List<IShape> listOfShape2 = layerInformation.get(layer2);
+
+    layerInformation.put(layer1, listOfShape2);
+    layerInformation.put(layer2, listOfShape1);
+  }
+
+  @Override
+  public void addShapeToLayer(String shapeName, int layer) {
+    if (!nameMap.containsKey(shapeName)) {
+      throw new IllegalArgumentException("This shape does not exist yet");
+    }
+    if (!layerInformation.containsKey(layer)) {
+      throw new IllegalArgumentException("Layer given does not exist");
+    }
+
+    for (Map.Entry<Integer, List<IShape>> mapPair : layerInformation.entrySet()) {
+      if (mapPair.getValue().contains(nameMap.get(shapeName))) {
+        if (mapPair.getKey() == layer) {
+          break;
+        }
+        else {
+          mapPair.getValue().remove(nameMap.get(shapeName));
+          layerInformation.get(layer).add(nameMap.get(shapeName));
+        }
+      }
+    }
+
   }
 
   @Override

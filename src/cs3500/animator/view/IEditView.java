@@ -105,4 +105,11 @@ public interface IEditView extends IView {
    * @param currentTick current tick to set the slider positon at.
    */
   void updateSliderPosition(int currentTick);
+
+  public String getLayerButtonGroupOption();
+
+  String getLayerShapeName();
+  String getLayer1Info();
+  String getLayer2Info();
+
 }

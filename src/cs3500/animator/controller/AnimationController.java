@@ -271,6 +271,50 @@ public class AnimationController implements IController, ActionListener, ChangeL
             v.showErrorMsg(iae.getMessage());
           }
           break;
+        case "Edit Layer Button":
+          switch(v.getLayerButtonGroupOption()) {
+            case "Add new layer":
+              try {
+                int tmpInt = Integer.parseInt(v.getLayer1Info());
+                m.addNewLayer(tmpInt);
+              } catch (NumberFormatException nfe) {
+                v.showErrorMsg("You must enter an int for layer");
+              } catch (IllegalArgumentException iae) {
+                v.showErrorMsg(iae.getMessage());
+              }
+              break;
+            case "Delete a layer":
+              try {
+                int tmpInt = Integer.parseInt(v.getLayer1Info());
+                m.deleteLayer(tmpInt);
+              } catch (NumberFormatException nfe) {
+                v.showErrorMsg("You must enter an int for layer");
+              } catch (IllegalArgumentException iae) {
+                v.showErrorMsg(iae.getMessage());
+              }
+              break;
+            case "Reorder two layers":
+              try {
+                int tmpInt = Integer.parseInt(v.getLayer1Info());
+                int tmpInt2 = Integer.parseInt(v.getLayer2Info());
+                m.reorderLayer(tmpInt, tmpInt2);
+              } catch (IllegalArgumentException iae) {
+                v.showErrorMsg(iae.getMessage());
+              }
+              break;
+            case "Add a shape to a layer":
+              try {
+                int tmpInt = Integer.parseInt(v.getLayer1Info());
+                m.addShapeToLayer(v.getLayerShapeName(), tmpInt);
+              } catch (IllegalArgumentException iae) {
+                v.showErrorMsg(iae.getMessage());
+              }
+              break;
+            default:
+              v.showErrorMsg("Invalid command");
+              break;
+          }
+          break;
         default:
           //v.showErrorMsg("Invalid command");
           testStr = "No such action command";

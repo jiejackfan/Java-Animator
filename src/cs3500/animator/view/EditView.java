@@ -2,7 +2,9 @@ package cs3500.animator.view;
 
 import cs3500.animator.controller.AnimationController;
 import cs3500.animator.model.ReadOnlyModel;
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
@@ -10,7 +12,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -18,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -79,6 +84,21 @@ public class EditView extends JFrame implements IEditView {
   protected JTextField shapeShapeName;
   protected JTextField shapeShapeType;
 
+  //variables for
+  protected JPanel layerPanel;
+  protected JTextField changeLayerShapeName;
+  protected JTextField layer1;
+  protected JTextField layer2;
+  protected JRadioButton addLayer;
+  protected JRadioButton deleteLayer;
+  protected JRadioButton reorderLayer;
+  protected JRadioButton addShapeToLayer;
+  protected JButton editLayerButton;
+  protected ButtonGroup layerButtonGroup;
+
+  protected JPanel wholeEditPanel;
+  protected JPanel upperEditPanel;
+  protected JPanel lowerEditPanel;
 
   /**
    * Constructor for the EditView. Set up the entire gui appearance by defining buttons, textboxes,
@@ -111,6 +131,13 @@ public class EditView extends JFrame implements IEditView {
     animatorPanel = new AnimatorPanel(m);
     animatorPanel.setPreferredSize(new Dimension(width, height));
     p.add(animatorPanel);
+
+    wholeEditPanel = new JPanel();
+    wholeEditPanel.setLayout(new BoxLayout(wholeEditPanel, BoxLayout.Y_AXIS));
+    upperEditPanel = new JPanel();
+    upperEditPanel.setLayout(new BoxLayout(upperEditPanel, BoxLayout.X_AXIS));
+    lowerEditPanel = new JPanel();
+    lowerEditPanel.setLayout(new BoxLayout(lowerEditPanel, BoxLayout.X_AXIS));
 
     //Implementation of the play back control panel.
     controlPanel = new JPanel();
@@ -155,7 +182,7 @@ public class EditView extends JFrame implements IEditView {
     slider.setBorder(
         BorderFactory.createEmptyBorder(0,0,10,0));
     controlPanel.add(slider);
-    p.add(controlPanel);
+    upperEditPanel.add(controlPanel);
 
     editPanel = new JPanel();
     editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
@@ -196,7 +223,7 @@ public class EditView extends JFrame implements IEditView {
     modifyKeyframeButton.setActionCommand("Modify Keyframe");
     editPanel.add(modifyKeyframeButton);
     editPanel.setBorder(new EmptyBorder(new Insets(50, 20, 50, 20)));
-    p.add(editPanel);
+    upperEditPanel.add(editPanel);
 
     insertPanel = new JPanel();
     insertPanel.setLayout(new BoxLayout(insertPanel, BoxLayout.Y_AXIS));
@@ -217,7 +244,7 @@ public class EditView extends JFrame implements IEditView {
     insertPanel.add(insertKeyframeButton);
     insertPanel.add(deleteKeyframeButton);
     insertPanel.setBorder(new EmptyBorder(new Insets(50, 20, 50, 20)));
-    p.add(insertPanel);
+    upperEditPanel.add(insertPanel);
 
     shapePanel = new JPanel();
     shapePanel.setLayout(new BoxLayout(shapePanel, BoxLayout.Y_AXIS));
@@ -238,11 +265,107 @@ public class EditView extends JFrame implements IEditView {
     shapePanel.add(insertShapeButton);
     shapePanel.add(deleteShapeButton);
     shapePanel.setBorder(new EmptyBorder(new Insets(50, 20, 50, 20)));
-    p.add(shapePanel);
+    upperEditPanel.add(shapePanel);
+
+    layerPanel = new JPanel();
+    layerPanel.setLayout(new BoxLayout(layerPanel, BoxLayout.Y_AXIS));
+    layerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    lowerEditPanel.add(layerPanel);
+
+
+    changeLayerShapeName = new JTextField();
+    changeLayerShapeName.setMaximumSize(new Dimension(300,
+        changeLayerShapeName.getMinimumSize().height));
+    layerPanel.add(new JLabel("Change Layer of this Shape:"));
+    layerPanel.add(changeLayerShapeName);
+    layer1 = new JTextField();
+    layer1.setMaximumSize(new Dimension(300,
+        layer1.getMinimumSize().height));
+    layerPanel.add(new JLabel("Layer:"));
+    layerPanel.add(layer1);
+    layer2 = new JTextField();
+    layer2.setMaximumSize(new Dimension(300,
+        layer2.getMinimumSize().height));
+    layerPanel.add(new JLabel("Layer to swap:"));
+    layerPanel.add(layer2);
+    addLayer = new JRadioButton("Add a layer");
+    addLayer.setActionCommand("Add new layer");
+    layerPanel.add(addLayer);
+    deleteLayer = new JRadioButton("Delete a layer");
+    deleteLayer.setActionCommand("Delete a layer");
+    layerPanel.add(deleteLayer);
+    reorderLayer = new JRadioButton("Reorder a layer to new layer");
+    reorderLayer.setActionCommand("Reorder two layers");
+    layerPanel.add(reorderLayer);
+    addShapeToLayer = new JRadioButton("Add a shape to a layer");
+    addShapeToLayer.setActionCommand("Add a shape to a layer");
+    layerPanel.add(addShapeToLayer);
+    editLayerButton = new JButton("Do Edit on Layer");
+    editLayerButton.setActionCommand("Edit Layer Button");
+    layerPanel.add(editLayerButton);
+
+    layerButtonGroup = new ButtonGroup();
+    layerButtonGroup.add(addLayer);
+    layerButtonGroup.add(deleteLayer);
+    layerButtonGroup.add(reorderLayer);
+    layerButtonGroup.add(addShapeToLayer);
+
+
+    this.configureRadioButtons();
+
+
+    wholeEditPanel.add(upperEditPanel);
+    wholeEditPanel.add(lowerEditPanel);
+    p.add(wholeEditPanel);
 
     add(p);
     pack();
+    this.setResizable(true);
   }
+
+  private void configureRadioButtons() {
+    this.addLayer.addActionListener(e -> {
+      this.changeLayerShapeName.setEnabled(false);
+      this.layer1.setEnabled(true);
+      this.layer2.setEnabled(false);
+    });
+    this.deleteLayer.addActionListener(e -> {
+      this.changeLayerShapeName.setEnabled(false);
+      this.layer1.setEnabled(true);
+      this.layer2.setEnabled(false);
+    });
+    this.reorderLayer.addActionListener(e -> {
+      this.changeLayerShapeName.setEnabled(false);
+      this.layer1.setEnabled(true);
+      this.layer2.setEnabled(true);
+    });
+    this.addShapeToLayer.addActionListener(e -> {
+      this.changeLayerShapeName.setEnabled(true);
+      this.layer1.setEnabled(true);
+      this.layer2.setEnabled(false);
+    });
+  }
+
+  @Override
+  public String getLayerButtonGroupOption() {
+    return this.layerButtonGroup.getSelection().getActionCommand();
+  }
+
+  @Override
+  public String getLayerShapeName() {
+    return changeLayerShapeName.getText();
+  }
+
+  @Override
+  public String getLayer1Info() {
+    return layer1.getText();
+  }
+
+  @Override
+  public String getLayer2Info() {
+    return layer2.getText();
+  }
+
 
   @Override
   public void refresh() {
@@ -280,6 +403,7 @@ public class EditView extends JFrame implements IEditView {
     loadButton.addActionListener(actionListener);
     saveSVGButton.addActionListener(actionListener);
     saveTextButton.addActionListener(actionListener);
+    editLayerButton.addActionListener(actionListener);
   }
 
   @Override
