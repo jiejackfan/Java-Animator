@@ -73,7 +73,6 @@ public interface IShape {
    */
   double getAngle();
 
-
   /**
    * Getter function to get this shape's shape type (DifferentShapes enum) at specific tick.
    *

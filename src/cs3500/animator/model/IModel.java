@@ -207,4 +207,5 @@ public interface IModel extends ReadOnlyModel {
    * @param layer     integer representation of the layer.
    */
   void addShapeToLayer(String shapeName, int layer);
+
 }
