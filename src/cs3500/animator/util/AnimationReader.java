@@ -76,17 +76,16 @@ public class AnimationReader {
     }
     if (s.hasNext()) {
       type = s.next();
-    }
-    else {
+    } else {
       throw new IllegalStateException("Shape: Expected a type, but no more input available");
     }
+    // Added the functionality to parse the the layer information
     String[] fieldNames = {"layer"};
     int vals;
     if (s.hasNextInt()) {
       vals = getInt(s, "Shape", "layer");
       builder.declareShape(name, type, vals);
-    }
-    else {
+    } else {
       vals = 0;
       builder.declareShape(name, type, vals);
     }
@@ -94,11 +93,11 @@ public class AnimationReader {
 
   private static <Doc> void readMotion(Scanner s, AnimationBuilder<Doc> builder) {
     String[] fieldNames = new String[]{"initial time", "initial x-coordinate",
-        "initial y-coordinate", "initial width", "initial height",
-        "initial red value", "initial green value",
-        "initial blue value", "final time", "final x-coordinate",
-        "final y-coordinate", "final width", "final height",
-        "final red value", "final green value", "final blue value", "initial angle", "final angle"};
+            "initial y-coordinate", "initial width", "initial height",
+            "initial red value", "initial green value",
+            "initial blue value", "final time", "final x-coordinate",
+            "final y-coordinate", "final width", "final height",
+            "final red value", "final green value", "final blue value", "initial angle", "final angle"};
     int[] vals = new int[18];
     String name;
     if (s.hasNext()) {
@@ -110,25 +109,24 @@ public class AnimationReader {
       vals[i] = getInt(s, "Motion", fieldNames[i]);
     }
 
+    // Added the functionality to read angle information
     if (s.hasNextInt()) {
       vals[16] = getInt(s, "Motion", fieldNames[16]);
 
       if (s.hasNextInt()) {
         vals[17] = getInt(s, "Motion", fieldNames[17]);
-      }
-      else {
+      } else {
         throw new IllegalArgumentException("Motion expects at least 2 angles.");
       }
       builder.addMotion(name,
-          vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7], vals[16],
-          vals[8], vals[9], vals[10], vals[11], vals[12], vals[13], vals[14], vals[15],
-          vals[17]);
-    }
-    else {
+              vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7], vals[16],
+              vals[8], vals[9], vals[10], vals[11], vals[12], vals[13], vals[14], vals[15],
+              vals[17]);
+    } else {
       builder.addMotion(name,
-          vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7], 0,
-          vals[8], vals[9], vals[10], vals[11], vals[12], vals[13], vals[14], vals[15],
-          0);
+              vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7], 0,
+              vals[8], vals[9], vals[10], vals[11], vals[12], vals[13], vals[14], vals[15],
+              0);
     }
   }
 

@@ -5,13 +5,13 @@ package cs3500.animator.util;
  * the parameters from the input file and trigger the according actions in the model.
  */
 public interface AnimationBuilder<Doc> {
+
   /**
    * Constructs a final document.
    *
    * @return the newly constructed document
    */
   Doc build();
-
 
   /**
    * Specify the bounding box to be used for the animation.
@@ -27,10 +27,10 @@ public interface AnimationBuilder<Doc> {
   /**
    * Adds a new shape to the growing document.
    *
-   * @param name The unique name of the shape to be added. No shape with this name should already
-   *             exist.
-   * @param type The type of shape (e.g. "ellipse", "rectangle") to be added. The set of supported
-   *             shapes is unspecified, but should include "ellipse" and "rectangle" as a minimum.
+   * @param name  The unique name of the shape to be added. No shape with this name should already
+   *              exist.
+   * @param type  The type of shape (e.g. "ellipse", "rectangle") to be added. The set of supported
+   *              shapes is unspecified, but should include "ellipse" and "rectangle" as a minimum.
    * @param layer The layer of shape to be added.
    * @return This {@link AnimationBuilder}
    */
@@ -48,6 +48,7 @@ public interface AnimationBuilder<Doc> {
    * @param r1   The initial red color-value of the shape
    * @param g1   The initial green color-value of the shape
    * @param b1   The initial blue color-value of the shape
+   * @param a1   The initial angle of the shape
    * @param t2   The end time of this transformation
    * @param x2   The final x-position of the shape
    * @param y2   The final y-position of the shape
@@ -56,6 +57,7 @@ public interface AnimationBuilder<Doc> {
    * @param r2   The final red color-value of the shape
    * @param g2   The final green color-value of the shape
    * @param b2   The final blue color-value of the shape
+   * @param a2   The final angle of the shape
    * @return This {@link AnimationBuilder}
    */
   AnimationBuilder<Doc> addMotion(String name, int t1, int x1, int y1, int w1, int h1, int r1,
@@ -74,8 +76,10 @@ public interface AnimationBuilder<Doc> {
    * @param r    The red color-value of the shape
    * @param g    The green color-value of the shape
    * @param b    The blue color-value of the shape
+   * @param a    The angle of the shape
    * @return This {@link AnimationBuilder}
    */
   AnimationBuilder<Doc> addKeyframe(String name,
                                     int t, int x, int y, int w, int h, int r, int g, int b, int a);
+
 }

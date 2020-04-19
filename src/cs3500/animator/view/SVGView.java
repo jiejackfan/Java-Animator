@@ -131,7 +131,7 @@ public class SVGView implements IView {
       //if the animation is about to start
       if (m.getStartTime() == m.getEndTime()) {
         svgContent += String.format("\t\t<set attributeName=\"visibility\" attributeType=\"CS\" "
-            + "to=\"visible\" begin=\"%.3fms\" dur=\"0.000ms\" fill=\"freeze\" />", startTime);
+                + "to=\"visible\" begin=\"%.3fms\" dur=\"0.000ms\" fill=\"freeze\" />", startTime);
       }
 
       if (m.getStartPosition().getX() != m.getEndPosition().getX()) {

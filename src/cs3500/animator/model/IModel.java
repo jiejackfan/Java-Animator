@@ -44,6 +44,7 @@ public interface IModel extends ReadOnlyModel {
    * @param startColorR Start red color of the shape
    * @param startColorB Start blue color of the shape
    * @param startColorG Start green color of the shape
+   * @param startAngle  Start angle of the shape
    * @param endTime     End time of the shape
    * @param endX        End position X of the shape
    * @param endY        End position Y of the shape
@@ -52,6 +53,7 @@ public interface IModel extends ReadOnlyModel {
    * @param endColorR   End red color of the shape
    * @param endColorB   End blue color of the shape
    * @param endColorG   End green color of the shape
+   * @param endAngle    End angle of the shape
    * @throws IllegalArgumentException if the name given by the user does not exist in current
    *                                  animation
    * @throws IllegalArgumentException if the given (starting and ending) position X or position Y is
@@ -62,10 +64,9 @@ public interface IModel extends ReadOnlyModel {
    *                                  negative
    */
   void addMotion(String name, int startTime, int startX, int startY, double startWidth,
-                 double startHeight, int startColorR, int startColorG, int startColorB, double startAngle,
-                 int endTime, int endX, double endY, double endWidth,
-                 double endHeight, int endColorR,
-                 int endColorG, int endColorB, double endAngle);
+                 double startHeight, int startColorR, int startColorG, int startColorB,
+                 double startAngle, int endTime, int endX, double endY, double endWidth,
+                 double endHeight, int endColorR, int endColorG, int endColorB, double endAngle);
 
   /**
    * Remove a motion from a list of motion for a given shape.
@@ -93,6 +94,7 @@ public interface IModel extends ReadOnlyModel {
    * @param colorR red color of the shape
    * @param colorG blue color of the shape
    * @param colorB green color of the shape
+   * @param angle  angle of the shape
    * @throws IllegalArgumentException if the str name given by the user does not exist or empty or
    *                                  null in current animation
    * @throws IllegalArgumentException if the time given by the user is less than 0
@@ -178,18 +180,21 @@ public interface IModel extends ReadOnlyModel {
 
   /**
    * Add a new layer to the layerInformation hashmap.
+   *
    * @param layer integer representation of the layer.
    */
   void addNewLayer(int layer);
 
   /**
    * Delete a layer in the layerInformation hashmap.
+   *
    * @param layer integer representation of the layer.
    */
   void deleteLayer(int layer);
 
   /**
    * Switch the list of Shapes belonging to the two layers.
+   *
    * @param layer1 integer representation of the layer1.
    * @param layer2 integer representation of the layer2.
    */
@@ -197,8 +202,9 @@ public interface IModel extends ReadOnlyModel {
 
   /**
    * Switch a shape from its own layer to a new specified layer.
+   *
    * @param shapeName shapeName of the shape user wants to store.
-   * @param layer integer representation of the layer.
+   * @param layer     integer representation of the layer.
    */
   void addShapeToLayer(String shapeName, int layer);
 }

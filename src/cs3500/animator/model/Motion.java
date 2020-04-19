@@ -31,6 +31,7 @@ public class Motion {
 
   private double startAngle;
   private double endAngle;
+
   /**
    * Public constructor 1 for motion. This is used when model wants to enter a new motion into a
    * shape's list of motions. The following parameters will be given by the input file.
@@ -40,11 +41,13 @@ public class Motion {
    * @param startWidth    starting width.
    * @param startHeight   starting height.
    * @param startColor    starting color.
+   * @param startAngle    starting angle.
    * @param endTime       ending time.
    * @param endPosition   ending position.
    * @param endWidth      ending width.
    * @param endHeight     ending height.
    * @param endColor      ending color.
+   * @param endAngle      ending angle.
    * @throws IllegalArgumentException if starting and ending times are less than 1.
    * @throws IllegalArgumentException if starting time is greater than ending time.
    * @throws IllegalArgumentException if any width or height are negative.
@@ -104,22 +107,23 @@ public class Motion {
   @Override
   public String toString() {
     String output;
+    // updated to print angle information
     output = String.join(" ", Integer.toString(startTime),
-            Integer.toString((int)startPosition.getX()),
-            Integer.toString((int)startPosition.getY()),
-            Integer.toString((int)startWidth), Integer.toString((int)startHeight),
+            Integer.toString((int) startPosition.getX()),
+            Integer.toString((int) startPosition.getY()),
+            Integer.toString((int) startWidth), Integer.toString((int) startHeight),
             Integer.toString(startColor.getRed()),
             Integer.toString(startColor.getGreen()),
             Integer.toString(startColor.getBlue()),
             Integer.toString(endTime),
-            Integer.toString((int)endPosition.getX()),
-            Integer.toString((int)endPosition.getY()),
-            Integer.toString((int)endWidth), Integer.toString((int)endHeight),
+            Integer.toString((int) endPosition.getX()),
+            Integer.toString((int) endPosition.getY()),
+            Integer.toString((int) endWidth), Integer.toString((int) endHeight),
             Integer.toString(endColor.getRed()),
             Integer.toString(endColor.getGreen()),
             Integer.toString(endColor.getBlue()),
-            Integer.toString((int)startAngle),
-            Integer.toString((int)endAngle));
+            Integer.toString((int) startAngle),
+            Integer.toString((int) endAngle));
     return output;
   }
 
@@ -213,10 +217,20 @@ public class Motion {
     return endColor;
   }
 
+  /**
+   * Getter function to get start angle.
+   *
+   * @return start angle.
+   */
   public double getStartAngle() {
     return startAngle;
   }
 
+  /**
+   * Getter function to get end angle.
+   *
+   * @return end angle.
+   */
   public double getEndAngle() {
     return endAngle;
   }
@@ -313,10 +327,11 @@ public class Motion {
 
   /**
    * Change the starting information of a Motion.
+   *
    * @param position starting position.
-   * @param width starting width.
-   * @param height starting height.
-   * @param color starting color.
+   * @param width    starting width.
+   * @param height   starting height.
+   * @param color    starting color.
    */
 
   public void changeMotionStart(Position2D position, double width, double height, Color color) {
@@ -328,10 +343,11 @@ public class Motion {
 
   /**
    * Change the ending information of a Motion.
+   *
    * @param position ending position.
-   * @param width ending width.
-   * @param height ending height.
-   * @param color ending color.
+   * @param width    ending width.
+   * @param height   ending height.
+   * @param color    ending color.
    */
   public void changeMotionEnd(Position2D position, double width, double height, Color color) {
     this.endPosition = position;
@@ -339,4 +355,5 @@ public class Motion {
     this.endHeight = height;
     this.endColor = color;
   }
+
 }

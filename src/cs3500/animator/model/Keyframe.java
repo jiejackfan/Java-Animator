@@ -32,6 +32,7 @@ public class Keyframe {
    * @param width    the given width
    * @param height   the given height
    * @param color    the given color
+   * @param angle    the given angle
    * @throws IllegalArgumentException if the given time is less than 0
    * @throws IllegalArgumentException if any width or height are negative
    */
@@ -129,6 +130,11 @@ public class Keyframe {
     return color;
   }
 
+  /**
+   * Getter function to get angle.
+   *
+   * @return angle
+   */
   public double getAngle() {
     return angle;
   }

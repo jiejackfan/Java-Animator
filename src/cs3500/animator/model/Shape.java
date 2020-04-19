@@ -42,15 +42,16 @@ public class Shape implements IShape {
    * Constructor of abstract shape that conducts assignment. This will be used if system creates a
    * shape with initialization values.
    *
-   * @param color    value of the shape that should be initialized.
-   * @param position value of the shape that should be initialized.
-   * @param width    value of the shape that should be initialized.
-   * @param height   value of the shape that should be initialized.
+   * @param color    color of the shape that should be initialized.
+   * @param position position of the shape that should be initialized.
+   * @param width    width of the shape that should be initialized.
+   * @param height   height of the shape that should be initialized.
+   * @param angle    angle of the shape that should be initialized.
    * @param name     name of the shape that should be initialized.
    * @param shape    shape of the shape that should be initialized.
    */
   public Shape(Color color, Position2D position, double width, double height, double angle,
-                String name, DifferentShapes shape) {
+               String name, DifferentShapes shape) {
     if (width <= 0 || height <= 0) {
       throw new IllegalArgumentException("The width and height must be positive");
     }
@@ -101,6 +102,7 @@ public class Shape implements IShape {
       if (!(that instanceof Shape)) {
         return false;
       }
+      // Updated the check equal mechanism
       return (this.color.equals(((Shape) that).color))
               && (this.position.equals(((Shape) that).position))
               && (Math.abs(this.width - ((Shape) (that)).width) < 0.1)
@@ -140,6 +142,5 @@ public class Shape implements IShape {
   public double getAngle() {
     return this.angle;
   }
-
 
 }

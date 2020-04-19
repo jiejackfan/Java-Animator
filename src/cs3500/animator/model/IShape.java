@@ -66,6 +66,11 @@ public interface IShape {
    */
   double getHeight();
 
+  /**
+   * Getter function to get this shape's angle at specific tick.
+   *
+   * @return a double that the shape has at tick time.
+   */
   double getAngle();
 
 
@@ -75,6 +80,5 @@ public interface IShape {
    * @return a DifferentShapes object that the shape has at tick time.
    */
   DifferentShapes getShape();
-
 
 }

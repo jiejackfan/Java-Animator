@@ -68,7 +68,7 @@ public class AnimationModel implements IModel {
     }
     if (nameMap.containsKey(name)
             && nameMap.containsValue(new Shape(name,
-        DifferentShapes.valueOf(shape.toLowerCase())))) {
+            DifferentShapes.valueOf(shape.toLowerCase())))) {
       throw new IllegalArgumentException("Shape exists, can't add again.");
     }
     nameMap.put(name, new Shape(name, DifferentShapes.valueOf(shape.toLowerCase())));
@@ -187,7 +187,7 @@ public class AnimationModel implements IModel {
       frames.get(shape).add(new Keyframe(time, new Position2D(0, 0), 0, 0,
               new Color(0, 0, 0), 0.0));
       addMotion(name, time, 0, 0, 0, 0, 0,
-              0, 0, 0.0,time, 0, 0, 0, 0,
+              0, 0, 0.0, time, 0, 0, 0, 0,
               0, 0, 0, 0.0);
       return;
     }
@@ -337,6 +337,13 @@ public class AnimationModel implements IModel {
     }
   }
 
+  /**
+   * Find and return a copy of the motion that has the given time in a list of motions.
+   *
+   * @param motions we want to find the motion in.
+   * @param time    the time of the motion we want to find.
+   * @return the motion (the copy of the actual object) that contains the time.
+   */
   private List<Motion> findMotions(List<Motion> motions, int time) {
     List<Motion> listMotions = new ArrayList<>();
     for (int i = 0; i < motions.size() - 1; i++) {
@@ -348,7 +355,6 @@ public class AnimationModel implements IModel {
     return listMotions;
   }
 
-  ///////////////////////////////////
   @Override
   public String toString() {
     String output = "";
@@ -365,7 +371,7 @@ public class AnimationModel implements IModel {
           layerOfShape = layerPair.getKey();
         }
       }
-
+      // Updated to print layer information
       output = output + "Shape " + name + " " + nameMap.get(name).getShapeName() + " "
           + layerOfShape + "\n";
 
@@ -479,7 +485,6 @@ public class AnimationModel implements IModel {
     return new Motion(listOfMotion.get(listOfMotion.size() - 1));
   }
 
-
   /**
    * Helper for getAnimation(). Builds a copy of a particular shape that contains the color,
    * position, width, height at a given time.
@@ -580,7 +585,7 @@ public class AnimationModel implements IModel {
    * @param fs   the given list of keyframes.
    * @param time the given time.
    * @return a boolean indicates whether the given time is in the time interval of the given list of
-   *          keyframes.
+   * keyframes.
    */
   private boolean isTimeInFrames(List<Keyframe> fs, int time) {
     int startTime = fs.get(0).getTime();
@@ -594,7 +599,7 @@ public class AnimationModel implements IModel {
    * @param fs   the given list of keyframes.
    * @param time the given time.
    * @return a list of keyframes that contains the keyframe right before and right after the given
-   *          time.
+   * time.
    */
   private List<Keyframe> findFrame(List<Keyframe> fs, int time) {
     List<Keyframe> kfs = new ArrayList<>();
@@ -742,7 +747,6 @@ public class AnimationModel implements IModel {
       return a.getStartTime() - b.getEndTime();
     }
   }
-
 
   @Override
   public void setCanvas(int x, int y, int w, int h) {
