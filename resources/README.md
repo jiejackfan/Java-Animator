@@ -18,7 +18,7 @@ Linking these three big parts together, we utilized 2 map data structures in Ani
 (NEW) For assignment 9, we adjusted our model to handle angle and layer information. In our model implementation, we added a regular hash map to store the layer information, with the key as layer and the value as a list of shapes within the layer. In motion, keyframe, and shape public classes, new fields were added to store the start angle and end angle information of the shapes. According setter and getter functions were included as well. 
 
 ----------------------------------------------------------------------------------------------------------------------------------------
-Changes to the model - 1:
+Changes to the model in Assignment 6:
 1. Changed the getAnimation() function (how view knows what to display at a particular tick) so a shape will stay on the screen even if it ended.
 2. Moved read only functions of IModel to ReadOnlyModel so view does not get access to mutate the model.
 3. Removed Abstract and concrete shape class, replaced them with a Enum class to represent different shape types. Using enum will elimate the need to create concrete classes when the user wants to introduce a new shape to the system.
@@ -27,7 +27,7 @@ Changes to the model - 1:
 6. Added a public method in IModel to sort each shape's list of motions. This will be called in main after AnimationBuilder finished building a model. 
 7. Added getAllShapes() and getAllMotionsOfShape(shape) to IModel. Will be useful for SVG view and per TA feedback.
 
-Changes to the model - 2:
+Changes to the model in Assignment 7:
 1. Another linked hashmap was added to store all the shapes and their corresponding keyframes
 2. In createShape(String shape, String name) and removeShape(String name), we enhanced the method to support applying changes to both the keyframe map and the motion map to keep the state consistent acrossing two storages.
 3. Operations of managing keyframes were added to the IModel, and all these operations also make according changes to the motions:
@@ -39,7 +39,7 @@ Changes to the model - 2:
     - getFrame(int time);
 5. A public class Keyframe was included in the model package, and it has a default constructor and a copy constructor.
 
-(NEW) This is a list of public methods updated for this assignment: 
+(NEW) This is a list of public methods updated for this assignment 9: 
   In IShape: 
   - int hashCode();
   - boolean equals(Object that);
@@ -78,9 +78,29 @@ View: 4 different types:
 4.Edit View:
   Sets up a panel where you can interactively play with the animation. You can start, pause, resume, replay, loop, fast forward (x1.2), and slow (x0.8) the animation. You are also able to insert a keyframe to a specific time for a named shape, delete a keyframe by providing the name of the shape and the index of the keyframe, and modify a keyframe by specifying all parameters (for position, please specify x and y, separated by space; for color, please specify r, g, and b, in order, also separated by space; if you want to leave some parameters unchanged, then please enter their original values), including the position, size (width and height), and color of a named shape at a certain time. If any parameter is incorrect, a warning window will pop up. Save and load function were added in the panel as well. You should be about to load a .txt to this view and display your animation or save your animation (in its last modified state) in either as a text file or as a SVG file. 
   
+(NEW) Edit View changes for Assignment 9:
+
+Added a panel for changing layer information of an animation. This new panel will be 4 radio buttons, which can add a layer, delete a layer, swap two layers or add a shape to a layer.
+1. Add a layer: This option will add a layer with no shapes. If the shape layer already exist then it will not add that layer.
+2. Delete a layer: This option will delete the entire layer and also delete all the shapes within that layer.
+3. Swap 2 layers: swaps the shapes within 2 layers.
+4. Add a shape to a layer: specify a particular shape to be transferred to the new layer. The shape to be moved should already exist.
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 Controller:
-The controller handles the initialial linking between model and view, initial setup of clocking, and tells the view to update. The clocking is setup using the Swing. Timer library, where the delay is calculated based on tickPerSecond given by the user. For different views, the playAnimation() will have different response. If playAnimation is called on a visual view or edit view, controller will ask the view to draw the window and starts the timer, everytime timer ticks it invokes refresh() on the panel so it can draw new animation. If playAnimation() is called on text or svg view, then they will output to their output file without any timer. Controller will not be the actionListener for the button click events. Thus, it overrides the actionPerformed() function. Within the action performed function, there will be a switch statement for each different button. The detailed comments for each button will be in the AnimationController documentation.
+The controller handles the initial linking between model and view, initial setup of clocking, and tells the view to update. The clocking is setup using the Swing. Timer library, where the delay is calculated based on tickPerSecond given by the user. For different views, the playAnimation() will have different response. If playAnimation is called on a visual view or edit view, controller will ask the view to draw the window and starts the timer, everytime timer ticks it invokes refresh() on the panel so it can draw new animation. If playAnimation() is called on text or svg view, then they will output to their output file without any timer. Controller will not be the actionListener for the button click events. Thus, it overrides the actionPerformed() function. Within the action performed function, there will be a switch statement for each different button. The detailed comments for each button will be in the AnimationController documentation.
+
+
+
+(NEW) Controller functionality for Assignment 9:
+
+Added support for the new button's action command. Including the following:
+
+1. "Edit Layer Button":
+2. "Add new layer":
+3. "Delete a layer":
+4. "Reorder two layers":
+5. "Add a shape to a layer":
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 (NEW) Untils:
