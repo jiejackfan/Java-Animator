@@ -12,8 +12,8 @@
 //import org.junit.Test;
 //
 ///**
-// * Test class for our animation model. Verify that our model can create shapes and add each shape's
-// * list of motions. Also verify the model can remove shape and list of motions. Lastly, the test
+// * Test class for our animation model. Verify that our model can create shapes and add each shape'
+// * s list of motions. Also verify the model can remove shape and list of motions. Lastly, the test
 // * should prove the model can correctly print out a string version of the entire animation and can
 // * create a list of shapes that contains shapes with its characteristics at a certain time.
 // */

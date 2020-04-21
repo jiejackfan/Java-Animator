@@ -272,7 +272,7 @@ public class AnimationController implements IController, ActionListener, ChangeL
           }
           break;
         case "Edit Layer Button":
-          switch(v.getLayerButtonGroupOption()) {
+          switch (v.getLayerButtonGroupOption()) {
             case "Add new layer":
               try {
                 int tmpInt = Integer.parseInt(v.getLayer1Info());
@@ -338,9 +338,20 @@ public class AnimationController implements IController, ActionListener, ChangeL
   @Override
   public void stateChanged(ChangeEvent e) {
     JSlider src = (JSlider) e.getSource();
+
+    if (src.getValueIsAdjusting()) {
+      timer.stop();
+      currentTick = src.getValue();
+      m.setTick(currentTick);
+      ((EditView) v).updateSliderPosition(currentTick);
+      v.refresh();
+      return;
+    }
+
+
     currentTick = src.getValue();
     m.setTick(currentTick);
     ((EditView) v).updateSliderPosition(currentTick);
-
+    timer.start();
   }
 }

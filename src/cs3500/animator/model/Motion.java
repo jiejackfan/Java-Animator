@@ -53,8 +53,8 @@ public class Motion {
    * @throws IllegalArgumentException if any width or height are negative.
    */
   public Motion(int startTime, Position2D startPosition, double startWidth, double startHeight,
-                Color startColor, double startAngle, int endTime, Position2D endPosition, double endWidth,
-                double endHeight, Color endColor, double endAngle) {
+                Color startColor, double startAngle, int endTime, Position2D endPosition,
+                double endWidth, double endHeight, Color endColor, double endAngle) {
     // Check whether the given times are valid.
     if (startTime < 0 || endTime < 0) {
       throw new IllegalArgumentException("Invalid time.");

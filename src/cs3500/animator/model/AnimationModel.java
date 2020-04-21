@@ -3,7 +3,6 @@ package cs3500.animator.model;
 import cs3500.animator.util.AnimationBuilder;
 
 import java.awt.Color;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -237,7 +236,8 @@ public class AnimationModel implements IModel {
       if (time > time1 && time < time2) {
         IShape newShape = buildShapeFromFrame(shape, fs, time, name);
         Keyframe tmpKeyframe = new Keyframe(time, newShape.getPosition(),
-                newShape.getWidth(), newShape.getHeight(), newShape.getColor(), newShape.getAngle());
+                newShape.getWidth(), newShape.getHeight(), newShape.getColor(),
+                newShape.getAngle());
         fs.add(i + 1, tmpKeyframe);
         // Make according insertion to motions of the given shape
         Motion tmpMotion = findActualMotion(animation.get(nameMap.get(name)), time);
@@ -500,13 +500,14 @@ public class AnimationModel implements IModel {
     //if the time has passed the ending time
     if (time > tmpMotion.getEndTime() && time <= maxTick) {
       return new Shape(tmpMotion.getEndColor(), tmpMotion.getEndPosition(), tmpMotion.getEndWidth(),
-              tmpMotion.getEndHeight(), tmpMotion.getEndAngle(), name, DifferentShapes.valueOf(shape.toLowerCase()));
+              tmpMotion.getEndHeight(), tmpMotion.getEndAngle(), name,
+              DifferentShapes.valueOf(shape.toLowerCase()));
     }
     //if starttime the time given
     else if (time == tmpMotion.getStartTime()) {
       return new Shape(tmpMotion.getStartColor(), tmpMotion.getStartPosition(),
-              tmpMotion.getStartWidth(), tmpMotion.getStartHeight(), tmpMotion.getStartAngle(), name,
-              DifferentShapes.valueOf(shape.toLowerCase()));
+              tmpMotion.getStartWidth(), tmpMotion.getStartHeight(), tmpMotion.getStartAngle(),
+              name, DifferentShapes.valueOf(shape.toLowerCase()));
     }
     //else if the time has not passed ending time
     else {
@@ -585,7 +586,7 @@ public class AnimationModel implements IModel {
    * @param fs   the given list of keyframes.
    * @param time the given time.
    * @return a boolean indicates whether the given time is in the time interval of the given list of
-   * keyframes.
+   *          keyframes.
    */
   private boolean isTimeInFrames(List<Keyframe> fs, int time) {
     int startTime = fs.get(0).getTime();
@@ -595,11 +596,10 @@ public class AnimationModel implements IModel {
   /**
    * Find the keyframe right before and right after the given time from the given list of
    * keyframes.
-   *
    * @param fs   the given list of keyframes.
    * @param time the given time.
    * @return a list of keyframes that contains the keyframe right before and right after the given
-   * time.
+   *          time.
    */
   private List<Keyframe> findFrame(List<Keyframe> fs, int time) {
     List<Keyframe> kfs = new ArrayList<>();
@@ -633,7 +633,8 @@ public class AnimationModel implements IModel {
     Keyframe endFrame = tmpFrame.get(1);
     if (time > endFrame.getTime() && time <= maxTick) {
       return new Shape(endFrame.getColor(), endFrame.getPosition(), endFrame.getWidth(),
-              endFrame.getHeight(), endFrame.getAngle(), name, DifferentShapes.valueOf(shape.toLowerCase()));
+              endFrame.getHeight(), endFrame.getAngle(), name,
+              DifferentShapes.valueOf(shape.toLowerCase()));
     }
     //if starttime the time given
     else if (time == startFrame.getTime()) {
@@ -768,12 +769,13 @@ public class AnimationModel implements IModel {
       layerInformation.put(layer, new ArrayList<IShape>());
     }
   }
+
   @Override
   public void deleteLayer(int layer) {
     if (!layerInformation.containsKey(layer)) {
       throw new IllegalArgumentException("Layer does not exist");
     }
-    for(IShape s: layerInformation.get(layer)) {
+    for (IShape s: layerInformation.get(layer)) {
       removeShape(s.getName());
     }
     layerInformation.remove(layer);
@@ -911,8 +913,9 @@ public class AnimationModel implements IModel {
 
     @Override
     public AnimationBuilder<IModel> addMotion(String name, int t1, int x1, int y1, int w1, int h1,
-                                              int r1, int g1, int b1, int a1, int t2, int x2, int y2,
-                                              int w2, int h2, int r2, int g2, int b2, int a2) {
+                                              int r1, int g1, int b1, int a1, int t2, int x2,
+                                              int y2, int w2, int h2, int r2, int g2, int b2,
+                                              int a2) {
       m.addMotion(name, t1, x1, y1, w1, h1, r1, g1, b1, a1, t2, x2, y2, w2, h2, r2, g2, b2, a2);
       return this;
     }

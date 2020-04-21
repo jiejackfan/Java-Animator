@@ -1,8 +1,6 @@
 package cs3500.animator.view;
 
-import cs3500.animator.controller.AnimationController;
 import cs3500.animator.model.ReadOnlyModel;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -12,7 +10,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -23,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;

@@ -9,8 +9,8 @@
 //import org.junit.Test;
 //
 ///**
-// * Animator Controller test will feature tests on the Action Listener events. It will test whether a
-// * particular action event's action command can be recognized by actionPerformed(). Also tests
+// * Animator Controller test will feature tests on the Action Listener events. It will test whether
+// * a particular action event's action command can be recognized by actionPerformed(). Also tests
 // * whether actionPerformed will give correct reaction to false action command.
 // */
 //public class AnimationControllerTest {

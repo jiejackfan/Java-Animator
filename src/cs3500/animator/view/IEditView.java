@@ -101,15 +101,33 @@ public interface IEditView extends IView {
   void addChangeListener(ChangeListener cl);
 
   /**
-   * Updates the current slider position;
+   * Updates the current slider position.
    * @param currentTick current tick to set the slider positon at.
    */
   void updateSliderPosition(int currentTick);
 
-  public String getLayerButtonGroupOption();
+  /**
+   * Getter function to get the action command from the group of radio buttons.
+   * @return an action command of a radio button.
+   */
+  String getLayerButtonGroupOption();
 
+  /**
+   * Getter function to get the textfield result from LayerShapeName.
+   * @return a string provided in the textfield.
+   */
   String getLayerShapeName();
+
+  /**
+   * Getter function to get the textfield result from layer1Info.
+   * @return a string provided in the textfield.
+   */
   String getLayer1Info();
+
+  /**
+   * Getter function to get the textfield result from layer2Info.
+   * @return a string provided in the textfield.
+   */
   String getLayer2Info();
 
 }
